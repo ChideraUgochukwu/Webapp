@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Chat Rooms - StudyBuddy{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2 class="text-light mb-0">Chat Rooms</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'chat_room_create' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create Room
+            </a>
+        </div>
+    </div>
+
+    {% if chat_rooms %}
+        <div class="row">
+            {% for room in chat_rooms %}
+                <div class="col-md-6 mb-4">
+                    <div class="chat-room-card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ room.name }}</h5>
+                            <p class="card-text text-muted">{{ room.description|truncatechars:100 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    <i class="fas fa-users"></i> {{ room.participants.count }} members
+                                </small>
+                                <a href="{% url 'chat_room_detail' room.id %}" class="btn btn-outline-primary">Join Room</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center mt-5">
+            <div class="empty-state">
+                <i class="fas fa-comments fa-3x mb-3"></i>
+                <h3>No Chat Rooms Yet</h3>
+                <p class="text-muted">Be the first to create a chat room!</p>
+                <a href="{% url 'chat_room_create' %}" class="btn btn-primary mt-3">
+                    Create Your First Room
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

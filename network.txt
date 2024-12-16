@@ -1,0 +1,29 @@
+# Differences Between a Router and a Switch
+
+## Router
+
+- **Functionality**: Routers are networking devices that forward data packets between computer networks. They are responsible for routing traffic from one network to another, such as from a home network to the internet.
+- **Layer**: Operates at the Network Layer (Layer 3) of the OSI model.
+- **IP Addressing**: Routers use IP addresses to determine the best path for forwarding packets.
+- **Connectivity**: Connects different networks together, such as connecting a local network to the internet.
+- **Routing Protocols**: Supports routing protocols like OSPF, BGP, and RIP to dynamically determine the best path for data.
+- **Security**: Often includes features like firewalls, VPN support, and NAT (Network Address Translation) for security.
+- **Example Use Case**: Used in homes and businesses to connect internal networks to external networks like the internet.
+
+## Switch
+
+- **Functionality**: Switches are networking devices that connect devices within a single network, such as computers, printers, and servers, allowing them to communicate with each other.
+- **Layer**: Operates at the Data Link Layer (Layer 2) of the OSI model, although some switches also operate at Layer 3.
+- **MAC Addressing**: Uses MAC addresses to forward data to the correct destination within a network.
+- **Connectivity**: Connects devices within the same network, creating a network segment.
+- **Switching Protocols**: Uses protocols like STP (Spanning Tree Protocol) to prevent loops in the network.
+- **Security**: Can include features like VLANs (Virtual Local Area Networks) for segmenting traffic.
+- **Example Use Case**: Used in offices and data centers to connect computers and servers within the same network.
+
+## Key Differences
+
+- **Purpose**: Routers connect different networks, while switches connect devices within the same network.
+- **Addressing**: Routers use IP addresses, whereas switches use MAC addresses.
+- **Layer of Operation**: Routers operate at Layer 3, while switches operate at Layer 2 (with some Layer 3 capabilities).
+- **Routing vs. Switching**: Routers perform routing, determining the best path for data, while switches perform switching, forwarding data to the correct device within a network.
+- **Security Features**: Routers typically have more advanced security features compared to switches.

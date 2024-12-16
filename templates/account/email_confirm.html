@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Confirm Email - StudyBuddy{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="auth-card text-center">
+                <div class="auth-header mb-4">
+                    <h2>Confirm Your Email</h2>
+                </div>
+                
+                {% if confirmation %}
+                    {% if confirmation.email_address.verified %}
+                        <div class="alert alert-success">
+                            <h3>Email Verified Successfully!</h3>
+                            <p>Your email {{ confirmation.email_address.email }} has been confirmed.</p>
+                            <a href="{% url 'account_login' %}" class="btn btn-primary mt-3">Login Now</a>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            <h3>Email Confirmation Pending</h3>
+                            <p>Please check your email to complete the verification process.</p>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-danger">
+                        <h3>Invalid Confirmation Link</h3>
+                        <p>The confirmation link is invalid or has expired.</p>
+                        <a href="{% url 'account_signup' %}" class="btn btn-primary mt-3">Sign Up Again</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search Results - StudyBuddy{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Search Results for "{{ query }}"</h2>
+
+    <!-- Topics -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Topics</h5>
+        </div>
+        <div class="card-body">
+            {% if topics %}
+                <div class="list-group">
+                    {% for topic in topics %}
+                        <a href="{% url 'topic_detail' topic.pk %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ topic.name }}</h6>
+                                <small>{{ topic.chat_rooms.count }} rooms</small>
+                            </div>
+                            <p class="mb-1">{{ topic.description|truncatewords:30 }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">No topics found matching your search.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Chat Rooms -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Chat Rooms</h5>
+        </div>
+        <div class="card-body">
+            {% if rooms %}
+                <div class="list-group">
+                    {% for room in rooms %}
+                        <a href="{% url 'chat_room_detail' room.pk %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ room.name }}</h6>
+                                <small>{{ room.participants.count }} participants</small>
+                            </div>
+                            <p class="mb-1">{{ room.description|truncatewords:30 }}</p>
+                            <small class="text-muted">Topic: {{ room.topic.name }}</small>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">No chat rooms found matching your search.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Messages</h5>
+        </div>
+        <div class="card-body">
+            {% if messages %}
+                <div class="list-group">
+                    {% for message in messages %}
+                        <a href="{% url 'chat_room_detail' message.room.pk %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ message.user.username }}</h6>
+                                <small>{{ message.created_at|timesince }} ago</small>
+                            </div>
+                            <p class="mb-1">{{ message.content|truncatewords:50 }}</p>
+                            <small class="text-muted">in {{ message.room.name }}</small>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">No messages found matching your search.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

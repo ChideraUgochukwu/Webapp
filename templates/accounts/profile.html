@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile - StudyBuddy{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Profile</h4>
+                </div>
+                <div class="card-body text-center">
+                    <img src="{{ user.avatar.url }}" alt="{{ user.username }}'s avatar" class="avatar-large mb-3">
+                    <h5>{{ user.username }}</h5>
+                    <p>{{ user.bio }}</p>
+                    <p><strong>Interests:</strong> {{ user.interests }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <a href="{% url 'profile_edit' %}" class="btn btn-outline-primary mt-3">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

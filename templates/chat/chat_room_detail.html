@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ room.name }} - StudyBuddy{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">{{ room.name }}</h4>
+                    <small>Topic: {{ room.topic.name }}</small>
+                </div>
+                <div class="card-body chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        {% for message in messages %}
+                            <div class="message {% if message.user == user %}message-own{% else %}message-other{% endif %} fade-in">
+                                <div class="message-content">{{ message.content }}</div>
+                                <div class="message-info">
+                                    {{ message.user.username }} - {{ message.created_at|date:"g:i A" }}
+                                    {% if message.is_edited %}
+                                        <small>(edited)</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="text-center text-muted">
+                                <p>No messages yet. Be the first to send a message!</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {% if user.is_authenticated %}
+                        <form method="post" id="message-form" class="mt-3">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    {% else %}
+                        <div class="alert alert-info mt-3">
+                            Please <a href="{% url 'account_login' %}">login</a> to participate in the chat.
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                        {{ room.participants.count }} participant{{ room.participants.count|pluralize }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const roomId = {{ room.id }};
+        const chat = new ChatWebSocket(roomId);
+        chat.connect();
+    });
+</script>
+{% endblock %}
